@@ -62,18 +62,18 @@ jQuery.fn.tileviewer = function(options) {
 		var zoctx = zoomoutcanvas.get(0).getContext('2d');
 		
 		// current level
-		cl = settings['levels'] - 1;
+		var cl = settings['levels'] - 1;
 		
 		// various coordinates
-		ox = settings['width']/2 - settings['cols_in_level'][cl]*settings['tile_size']/2;
-		oy = settings['height']/2 - settings['rows_in_level'][cl]*settings['tile_size']/2;
+		var ox = settings['width']/2 - settings['cols_in_level'][cl]*settings['tile_size']/2;
+		var oy = settings['height']/2 - settings['rows_in_level'][cl]*settings['tile_size']/2;
 		var startx, starty; var dragging = false;
 		
 		// blank image
-		blank='data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
+		var blank='data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
 		
 		// all images
-		var images = new Array(settings['levels']); var filenames = new Array(settings['levels']); var loaded = new Array(settings['levels']);
+		var images = new Array(settings['levels']), filenames = new Array(settings['levels']), loaded = new Array(settings['levels']);
 		for (var l=0; l<settings['levels']; l++) {
 			var tiles = settings['tiles_in_level'][l];
 			images[l] = new Array(tiles); filenames[l] = new Array(tiles); loaded[l] = new Array(tiles);
