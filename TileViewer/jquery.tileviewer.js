@@ -5,7 +5,7 @@
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // 
-// 	http://www.apache.org/licenses/LICENSE-2.0
+//	http://www.apache.org/licenses/LICENSE-2.0
 // 
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -44,7 +44,7 @@ jQuery.fn.tileviewer = function(options) {
 		return;
 	}
 	$.getJSON(settings['imagedir']+'/settings.json', function(data) {
-		settings = $.extend(settings,data)
+		settings = $.extend(settings,data);
 		// global indexes
 		var ROW=0; var COL=1;
 		
@@ -52,7 +52,7 @@ jQuery.fn.tileviewer = function(options) {
 		var canvas = $('<canvas width="'+settings['width']+'" height="'+settings['height']+'" style="position:absolute; top:0; left:0;"></canvas>');
 		var zoomincanvas = $('<canvas width="'+settings['zoomwidth']+'" height="'+settings['zoomwidth']+'" style="position:absolute; top:0; left:0; cursor:pointer;"></canvas>');
 		var zoomcanvas = $('<canvas width="'+settings['zoomwidth']+'" height="'+settings['zoomheight']+'" style="position:absolute; top:'+settings['zoomwidth']+'; left:0;"></canvas>');
-		var zoomoutcanvas = $('<canvas width="'+settings['zoomwidth']+'" height="'+settings['zoomwidth']+'" style="position:absolute; top:'+(settings['zoomwidth']+settings['zoomheight'])+'; left:0; cursor:pointer"></canvas>')
+		var zoomoutcanvas = $('<canvas width="'+settings['zoomwidth']+'" height="'+settings['zoomwidth']+'" style="position:absolute; top:'+(settings['zoomwidth']+settings['zoomheight'])+'; left:0; cursor:pointer"></canvas>');
 		thisDiv.append(canvas).append(zoomincanvas).append(zoomcanvas).append(zoomoutcanvas);
 		
 		// get contexts
@@ -62,7 +62,7 @@ jQuery.fn.tileviewer = function(options) {
 		var zoctx = zoomoutcanvas.get(0).getContext('2d');
 		
 		// current level
-		cl = settings['levels'] - 1
+		cl = settings['levels'] - 1;
 		
 		// various coordinates
 		ox = settings['width']/2 - settings['cols_in_level'][cl]*settings['tile_size']/2;
@@ -79,7 +79,7 @@ jQuery.fn.tileviewer = function(options) {
 			images[l] = new Array(tiles); filenames[l] = new Array(tiles); loaded[l] = new Array(tiles);
 			for (var i=0; i<tiles; i++) {
 				images[l][i] = new Image(); images[l][i].src=blank; images[l][i].level = l; images[l][i].index = i;
-				images[l][i].onload = function() {loaded[this.level][this.index] = true; if (this.src!=blank) draw_images(); };
+				images[l][i].onload = function() {loaded[this.level][this.index] = true; if (this.src!==blank) draw_images(); };
 				filenames[l][i] = settings['imagedir']+'/level'+l+'/tile-'+i+'.'+settings['filetype'];
 			}//endfor tiles
 		}//endfor levels
@@ -119,13 +119,13 @@ jQuery.fn.tileviewer = function(options) {
 				for (var c=0; c<cols; c++) {
 					var i = r*cols+c;
 					if (visibles[cl][ROW][r] && visibles[cl][COL][c]) {
-						if (images[cl][i].src == blank) {
+						if (images[cl][i].src === blank) {
 							images[cl][i].src = filenames[cl][i];
 							loaded[cl][i] = false;
 						}//endif blank
 					}//endif visible
 					else {
-						if (images[cl][i].src != blank) {
+						if (images[cl][i].src !== blank) {
 							images[cl][i].src = blank;
 							loaded[cl][i] = false;
 						}//endif not blank
@@ -147,7 +147,7 @@ jQuery.fn.tileviewer = function(options) {
 				oy = oy/2 + settings['tile_size']*(settings['rows_in_level'][cl-1]/4 - settings['rows_in_level'][cl]/2) + y/2;
 			}
 			update_visibles(); zoomcanvas.draw();
-		}//end zoomout function
+		}; //end zoomout function
 		
 		thisDiv.zoomin = function(x,y) {
 			cl--;
@@ -158,7 +158,7 @@ jQuery.fn.tileviewer = function(options) {
 				oy = 2*oy + settings['tile_size']*(settings['rows_in_level'][cl+1] - settings['rows_in_level'][cl]/2) - y;
 			}
 			update_visibles(); zoomcanvas.draw();
-		}//end zoomin function
+		}; //end zoomin function
 		
 		// zoom control views
 		zoomincanvas.draw = function(fill) {
@@ -170,14 +170,14 @@ jQuery.fn.tileviewer = function(options) {
 			zictx.strokeRect(settings['zoomwidth']/2-2,4,4,settings['zoomwidth']-8);
 			zictx.fillRect(settings['zoomwidth']/2-2,4,4,settings['zoomwidth']-8);
 			zictx.fillRect(settings['zoomwidth']/2-3,settings['zoomwidth']/2-2,6,3);
-		}//end zoomin canvas draw function
+		}; //end zoomin canvas draw function
 		zoomoutcanvas.draw = function(fill) {
 			zoctx.clearRect(0,0,settings['zoomwidth'],settings['zoomwidth']);
 			zoctx.strokeStyle = "#fff";
 			zoctx.fillStyle=fill;
 			zoctx.strokeRect(4,settings['zoomwidth']/2-2,settings['zoomwidth']-8,4);
 			zoctx.fillRect(4,settings['zoomwidth']/2-2,settings['zoomwidth']-8,4);
-		}//end zoomout canvas draw function
+		}; //end zoomout canvas draw function
 		zoomcanvas.draw = function() {
 			zctx.clearRect(0,0,settings['zoomwidth'],settings['zoomheight']);
 			zctx.strokeStyle = "#fff";
@@ -188,18 +188,18 @@ jQuery.fn.tileviewer = function(options) {
 				zctx.strokeRect(4,y-2,settings['zoomwidth']-8,4);
 				zctx.fillStyle=settings['background_color'];
 				zctx.fillRect(4,y-2,settings['zoomwidth']-8,4);
-				if (i == cl) {
+				if (i === cl) {
 					zctx.fillStyle="#000";
 					zctx.fillRect(4,y-2,settings['zoomwidth']-8,4);
 				}
 			}
-		}
+		};
 		zoomincanvas.draw(settings['background_color']); zoomcanvas.draw(); zoomoutcanvas.draw(settings['background_color']);
-		zoomincanvas.hover(function(){zoomincanvas.draw('#fff')}, function(){zoomincanvas.draw(settings['background_color'])});
-		zoomoutcanvas.hover(function(){zoomoutcanvas.draw('#fff')}, function(){zoomoutcanvas.draw(settings['background_color'])});
-		zoomincanvas.mousedown(function(){zoomincanvas.draw('#000')});
+		zoomincanvas.hover(function(){zoomincanvas.draw('#fff');}, function(){zoomincanvas.draw(settings['background_color']);});
+		zoomoutcanvas.hover(function(){zoomoutcanvas.draw('#fff');}, function(){zoomoutcanvas.draw(settings['background_color']);});
+		zoomincanvas.mousedown(function(){zoomincanvas.draw('#000');});
 		zoomincanvas.mouseup(function(){zoomincanvas.draw('#fff'); thisDiv.zoomin(settings['width']/2, settings['height']/2);});
-		zoomoutcanvas.mousedown(function(){zoomoutcanvas.draw('#000')});
+		zoomoutcanvas.mousedown(function(){zoomoutcanvas.draw('#000');});
 		zoomoutcanvas.mouseup(function(){zoomoutcanvas.draw('#fff'); thisDiv.zoomout(settings['width']/2, settings['height']/2);});
 		
 		// double click to zoom
@@ -222,7 +222,7 @@ jQuery.fn.tileviewer = function(options) {
 		});
 		canvas.mouseleave(function(e) {
 			dragging = false;
-		})
+		});
 		canvas.mousemove(function(e) {
 			if (dragging) {
 				nowx = e.pageX; nowy = e.pageY;
@@ -233,4 +233,4 @@ jQuery.fn.tileviewer = function(options) {
 			}
 		});
 	});
-}
+};
