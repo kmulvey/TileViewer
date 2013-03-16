@@ -112,7 +112,7 @@ jQuery.fn.tileviewer = function(options) {
 		
 		// update the visible and invisible images 
 		function update_visibles() {
-			rows = settings['rows_in_level'][cl]; cols = settings['cols_in_level'][cl];
+			var rows = settings['rows_in_level'][cl], cols = settings['cols_in_level'][cl];
 			for (var r=0; r<rows; r++) visibles[cl][ROW][r] = ((0<r*settings['tile_size']+settings['tile_size']+oy) && (r*settings['tile_size']+oy<settings['height']));
 			for (var c=0; c<cols; c++) visibles[cl][COL][c] = ((0<c*settings['tile_size']+settings['tile_size']+ox) && (c*settings['tile_size']+ox<settings['width']));
 			for (var r=0; r<rows; r++) {
@@ -184,7 +184,7 @@ jQuery.fn.tileviewer = function(options) {
 			zctx.moveTo(settings['zoomwidth']/2,2); zctx.lineTo(settings['zoomwidth']/2,settings['zoomheight']-2);
 			zctx.stroke();
 			for(var i=0; i<settings['levels']; i++) {
-				y = ((i+1)/(settings['levels']+1) * settings['zoomheight']);
+				var y = ((i+1)/(settings['levels']+1) * settings['zoomheight']);
 				zctx.strokeRect(4,y-2,settings['zoomwidth']-8,4);
 				zctx.fillStyle=settings['background_color'];
 				zctx.fillRect(4,y-2,settings['zoomwidth']-8,4);
@@ -204,7 +204,7 @@ jQuery.fn.tileviewer = function(options) {
 		
 		// double click to zoom
 		canvas.dblclick(function(e) {
-			o = canvas.offset();
+			var o = canvas.offset();
 			if (e.metaKey || e.ctrlKey) {
 				thisDiv.zoomout(e.pageX - o.left, e.pageY - o.top);
 			} else {
@@ -225,9 +225,10 @@ jQuery.fn.tileviewer = function(options) {
 		});
 		canvas.mousemove(function(e) {
 			if (dragging) {
-				nowx = e.pageX; nowy = e.pageY;
-				dx = nowx - startx; dy = nowy - starty;
-				startx = nowx; starty = nowy;
+				var nowx = e.pageX, nowy = e.pageY;
+				var dx = nowx - startx, dy = nowy - starty;
+				startx = nowx;
+				starty = nowy;
 				ox += dx; oy += dy;
 				update_visibles();
 			}
